@@ -1,0 +1,14 @@
+{
+  "description": "TR4CE 高尔夫球路轨迹追踪小程序",
+  "projectname": "tr4ce-golf-tracer",
+  "appid": "touristappid",
+  "compileType": "miniprogram",
+  "libVersion": "3.4.0",
+  "setting": {
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true,
+    "urlCheck": false
+  }
+}

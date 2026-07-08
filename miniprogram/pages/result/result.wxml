@@ -1,0 +1,60 @@
+<view class="page">
+  <video
+    id="replay"
+    class="video"
+    src="{{videoPath}}"
+    autoplay
+    loop
+    muted
+    controls="{{false}}"
+    object-fit="cover"
+    bindplay="onPlay"
+    bindtimeupdate="onTimeUpdate"
+  />
+  <canvas type="2d" id="overlay" class="overlay"></canvas>
+
+  <view class="topbar">
+    <view class="back" bindtap="goBack">‹</view>
+  </view>
+
+  <!-- 数据面板 -->
+  <view class="panel">
+    <view class="type-row">
+      <text class="type-emoji">{{stats.type.emoji}}</text>
+      <view class="type-text">
+        <text class="type-name" style="color: {{stats.type.color}}">{{stats.type.name}}</text>
+        <text class="type-zh">{{stats.type.zh}}</text>
+      </view>
+      <view class="carry">
+        <text class="carry-num">{{stats.carryEstM}}</text>
+        <text class="carry-unit">估算全程 · 米</text>
+      </view>
+    </view>
+
+    <view class="stat-grid">
+      <view class="stat">
+        <text class="k">画面轨迹长度</text>
+        <text class="v">{{stats.pathLenM}}<text class="u">m</text></text>
+      </view>
+      <view class="stat">
+        <text class="k">起飞角度</text>
+        <text class="v">{{stats.launchDeg}}<text class="u">°</text></text>
+      </view>
+      <view class="stat">
+        <text class="k">出球速度</text>
+        <text class="v">{{stats.v0Kmh}}<text class="u">km/h</text></text>
+      </view>
+    </view>
+
+    <view class="note">* 长度与速度基于机位距离估算，仅供参考</view>
+
+    <view class="btn-row">
+      <button class="btn-ghost half" bindtap="retry">🔁 再来一杆</button>
+      <button class="btn-primary half" bindtap="savePoster">💾 保存战绩图</button>
+    </view>
+    <button class="btn-ghost share-btn" open-type="share">📤 分享给球友</button>
+  </view>
+
+  <!-- 离屏海报画布 -->
+  <canvas type="2d" id="poster" class="poster-canvas"></canvas>
+</view>

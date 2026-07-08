@@ -1,0 +1,43 @@
+<view class="page">
+  <camera
+    class="cam"
+    device-position="back"
+    flash="off"
+    frame-size="medium"
+    resolution="high"
+    bindinitdone="onCamReady"
+    binderror="onCamError"
+  />
+  <canvas type="2d" id="overlay" class="overlay"></canvas>
+
+  <!-- 顶部状态 -->
+  <view class="topbar">
+    <view class="back" bindtap="goBack">‹</view>
+    <view class="status {{state === 'tracking' ? 'live' : ''}}">
+      <view class="dot" wx:if="{{recording}}"></view>
+      <text>{{hint}}</text>
+    </view>
+    <view class="spacer"></view>
+  </view>
+
+  <!-- 机位距离选择（影响长度/速度估算标定） -->
+  <view class="dist-row" wx:if="{{!recording}}">
+    <text class="dist-label">机位距球</text>
+    <view
+      class="dist-chip {{camDist === item ? 'on' : ''}}"
+      wx:for="{{[2, 3, 5, 8]}}"
+      wx:key="*this"
+      data-d="{{item}}"
+      bindtap="setDist"
+    >{{item}}m</view>
+  </view>
+
+  <!-- 底部控制 -->
+  <view class="bottom">
+    <view class="rotate-tip" wx:if="{{recording}}" bindtap="cycleRotate">轨迹方向不对？点此校准 ({{rotate}}°)</view>
+    <view class="shutter {{recording ? 'rec' : ''}}" bindtap="toggleRecord">
+      <view class="shutter-inner"></view>
+    </view>
+    <view class="shutter-label">{{recording ? '击球后自动完成 · 点击手动结束' : '点击开始，然后正常击球'}}</view>
+  </view>
+</view>

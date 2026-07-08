@@ -1,0 +1,113 @@
+.page { width: 100vw; height: 100vh; position: relative; background: #000; }
+
+.cam, .overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.overlay { pointer-events: none; }
+
+.topbar {
+  position: absolute;
+  top: calc(20rpx + env(safe-area-inset-top));
+  left: 24rpx;
+  right: 24rpx;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+.back {
+  width: 68rpx;
+  height: 68rpx;
+  border-radius: 50%;
+  background: var(--glass);
+  border: 1rpx solid var(--stroke);
+  color: #fff;
+  font-size: 48rpx;
+  line-height: 60rpx;
+  text-align: center;
+}
+.status {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  background: var(--glass);
+  border: 1rpx solid var(--stroke);
+  border-radius: 999rpx;
+  padding: 16rpx 28rpx;
+  font-size: 26rpx;
+  color: #fff;
+  backdrop-filter: blur(10px);
+}
+.status.live { border-color: rgba(255, 138, 60, 0.6); color: var(--accent); }
+.dot {
+  width: 14rpx; height: 14rpx;
+  border-radius: 50%;
+  background: #ff4d4d;
+  animation: blink 1s infinite;
+}
+@keyframes blink { 50% { opacity: 0.25; } }
+.spacer { width: 68rpx; }
+
+.dist-row {
+  position: absolute;
+  top: calc(120rpx + env(safe-area-inset-top));
+  left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14rpx;
+}
+.dist-label { font-size: 24rpx; color: rgba(255, 255, 255, 0.75); margin-right: 6rpx; }
+.dist-chip {
+  padding: 10rpx 26rpx;
+  border-radius: 999rpx;
+  background: var(--glass);
+  border: 1rpx solid var(--stroke);
+  color: #fff;
+  font-size: 26rpx;
+}
+.dist-chip.on { background: var(--accent); color: #1a0e02; font-weight: 700; border-color: transparent; }
+
+.bottom {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: calc(48rpx + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20rpx;
+}
+.rotate-tip {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+  background: var(--glass);
+  border: 1rpx solid var(--stroke);
+  border-radius: 999rpx;
+  padding: 10rpx 26rpx;
+}
+.shutter {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  border: 8rpx solid rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.shutter-inner {
+  width: 104rpx;
+  height: 104rpx;
+  border-radius: 50%;
+  background: #ff4d4d;
+  transition: all 0.2s;
+}
+.shutter.rec .shutter-inner {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 16rpx;
+}
+.shutter-label { font-size: 24rpx; color: rgba(255, 255, 255, 0.85); text-shadow: 0 1rpx 4rpx rgba(0,0,0,0.6); }

@@ -1,59 +1,66 @@
-# TR4CE ⛳ — Golf Shot Tracer 高尔夫轨迹追踪
+# TR4CE ⛳ — 高尔夫球路轨迹追踪
 
-一个 **零依赖、纯前端** 的高尔夫球路轨迹 mini app。合成波霓虹 (synthwave) 视觉风格，
-专为让人想截图 / 录屏分享而设计 🎥✨
+拍下真实挥杆，自动识别球的飞行轨迹，用彗星式发光描迹显化在画面上，
+并给出 **路径长度 / 起飞角度 / 球型判定**。
 
-A zero-dependency, pure front-end golf shot tracer mini app with a synthwave
-neon aesthetic, built to be screenshotted and shared.
+本仓库包含两个版本：
 
-## ✨ 功能 Features
+| 目录 | 形态 | 说明 |
+| --- | --- | --- |
+| `miniprogram/` | **微信小程序（主形态）** | 相机实拍 + 实时球轨迹识别与显化 |
+| `index.html` + `js/` + `css/` | Web 演示版 | 虚拟击球模拟器（合成波风格），可在浏览器直接体验 |
 
-- 🏌️ **两段式击球手感** — 按住 `SWING` 蓄力，松开锁定力量；再点一下锁定弧线 (DRAW ◀ ▶ FADE)
-- 🌈 **霓虹球路轨迹** — 伪 3D 透视球道 + 发光渐变轨迹 + 落地冲击波与粒子特效
-- 📐 **真实飞行物理** — 二次阻力 + 马格努斯效应（后旋升力 / 侧旋弯曲）+ 弹跳与滚动，
-  一号木 ~250 码、7 铁 ~175 码，右曲球真的会往右拐
-- 🍌 **球型自动判定** — PURE / DRAW / FADE / SLICE / HOOK / PUSH / PULL 及组合
-  （如 PUSH SLICE 右推大右曲），配 Gen Z 风格锐评文案
-- 📊 **完整数据** — CARRY 码数、TOTAL、弹道高、球速 mph、滞空时间、侧曲码数
-- 🗺️ **迷你视图** — 俯视 (TOP) + 侧视 (SIDE) 实时轨迹小窗
-- 📸 **一键战绩卡** — 生成 1080×1920 竖版分享图，直接走系统分享或下载
-- 🎥 **回放视频** — MediaRecorder 录制飞行回放 (mp4/webm)，发群里炫耀
-- 🏆 **PB 记录 + 历史** — localStorage 保存最远纪录与最近 12 杆
-- 📳 音效 (WebAudio 合成) + 震动反馈 + 破纪录彩带
+---
 
-## 🚀 运行 Run
+## 📱 微信小程序（主形态）
 
-无需构建、无需依赖：
+### 用户路径
 
-```bash
-# 任意静态服务器
-python3 -m http.server 8080
-# 打开 http://localhost:8080
-```
+1. 打开小程序 → 「开始追踪」
+2. 站在球正后方 2–4 米，点击录制按钮，正常击球
+3. 球被识别后，**发光轨迹实时跟着球画出来**；球出画面后自动完成
+4. 结果页：录像回放 + 轨迹重演，展示 **画面轨迹长度、起飞角度、球型**
+   （PURE / DRAW / FADE / HOOK / SLICE / PUSH / PULL），以及估算全程距离
+5. 一键保存战绩海报 / 分享给球友
 
-或直接双击 `index.html`（所有脚本均为普通 script，非 ES module，file:// 也能跑）。
-手机体验最佳 📱，桌面端可用空格键操作。
+### 运行方法
 
-## 🕹️ 玩法 How to play
+1. 下载 [微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)
+2. 「导入项目」→ 选择本仓库的 `miniprogram/` 目录
+3. AppID 用自己的小程序 AppID（或选「游客模式」预览）
+4. **必须真机预览**（工具模拟器没有相机帧接口）：点「预览」扫码，在手机上体验
 
-1. 选杆（DR / 3W / 5i / 7i / 9i / PW）
-2. **按住** `SWING` — 力量表往返摆动，松开锁定力量
-3. **再点一下** — 弧线标记左右扫动，点击锁定（左=DRAW 右=FADE，拉满就是香蕉球 🍌）
-4. 看着球飞，落地后查看判定 + 数据，一键生成战绩卡 / 回放视频分享
+### 技术要点
 
-## 🧱 结构 Structure
+- `camera` 组件 + `onCameraFrame` 实时取帧（RGBA）
+- `utils/tracker.js`：降采样灰度 → 帧差 → 小目标连通块 → 三帧一致性启动 →
+  速度预测 + 最近邻关联，输出球的像素轨迹（纯 JS，可在 node 单测）
+- `utils/analyzer.js`：由轨迹估算画面路径长度（按机位距离标定）、起飞角、
+  弯曲方向 → 球型判定；再用 `utils/physics.js` 的飞行仿真反推估算全程
+- `utils/draw.js`：cover 坐标映射 + Catmull-Rom 平滑 + 白热核心/琥珀光晕描迹
+- 结果页 `video` 回放与 canvas 描迹按录像时间轴同步重演
 
-```
-index.html        入口
-css/style.css     霓虹 UI
-js/physics.js     飞行物理仿真 + 球型判定 (可在 node 中单测)
-js/render.js      合成波场景渲染 (透视网格 / 太阳 / 发光轨迹)
-js/share.js       战绩卡生成 + 回放视频录制
-js/app.js         状态机 / 交互 / 特效 / HUD
-```
+### 已知边界（v1）
 
-物理引擎可独立验证：
+- 追踪为帧差启发式算法：**天空背景、光线充足、手机稳定**时效果最好；
+  30fps 下球出杆瞬间速度极快，通常从球飞远、视速度下降后开始稳定捕捉
+- 长度与速度是按「机位距球距离」的画面几何 + 物理仿真的**估算值**
+- 部分安卓机型相机帧方向不同，录制页内置「轨迹方向校准」按钮（0°/90°/270°）
+- 球型判定假设从球后方沿目标线拍摄（画面左右 ≈ 目标线左右）
+
+### 算法单测
 
 ```bash
-node -e "const P=require('./js/physics.js');console.log(P.simulate({ballSpeed:78,launchDeg:12.5,startDeg:0,backspin:2500,sidespin:0}).carryYd)"
+node -e "
+const T=require('./miniprogram/utils/tracker.js');
+const A=require('./miniprogram/utils/analyzer.js');
+// 参见 scratchpad 中的合成帧测试思路: 生成含运动小球的 RGBA 帧序列喂给 tracker
+"
 ```
+
+---
+
+## 🖥 Web 演示版（虚拟模拟器）
+
+无需构建：`python3 -m http.server 8080` 后打开 `index.html`，
+或直接双击。按住 SWING 蓄力、再点一下锁弧线，支持战绩卡 PNG 与回放视频导出。

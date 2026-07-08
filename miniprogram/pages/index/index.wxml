@@ -1,0 +1,24 @@
+<view class="page">
+  <view class="hero">
+    <view class="logo">TR4CE</view>
+    <view class="tagline">拍下你的挥杆 · 点亮球的轨迹</view>
+  </view>
+
+  <view class="tips">
+    <view class="tips-title">拍摄建议</view>
+    <view class="tip"><text class="tip-n">1</text>站在球的正后方 2–4 米（沿目标线拍摄）</view>
+    <view class="tip"><text class="tip-n">2</text>让球的起飞方向朝画面上方，背景尽量是天空</view>
+    <view class="tip"><text class="tip-n">3</text>手机保持稳定，光线充足时识别效果最好</view>
+  </view>
+
+  <button class="btn-primary start" bindtap="goRecord">📹 开始追踪</button>
+
+  <view class="history" wx:if="{{history.length}}">
+    <view class="tips-title">最近记录</view>
+    <view class="hist-item" wx:for="{{history}}" wx:key="index">
+      <text class="hist-emoji">{{item.emoji}}</text>
+      <text class="hist-main">{{item.typeZh}} · 起飞角 {{item.launchDeg}}°</text>
+      <text class="hist-sub">{{item.date}}</text>
+    </view>
+  </view>
+</view>

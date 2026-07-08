@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/record/record",
+    "pages/result/result"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#0d1117",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "TR4CE 球路追踪",
+    "backgroundColor": "#0d1117",
+    "backgroundTextStyle": "dark"
+  },
+  "sitemapLocation": "sitemap.json"
+}

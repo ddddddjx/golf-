@@ -1,0 +1,75 @@
+.page {
+  min-height: 100vh;
+  padding: 80rpx 48rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero { margin-bottom: 64rpx; }
+.logo {
+  font-size: 84rpx;
+  font-weight: 900;
+  letter-spacing: 8rpx;
+  color: var(--text);
+}
+.logo::after {
+  content: '⛳';
+  font-size: 56rpx;
+  margin-left: 16rpx;
+}
+.tagline {
+  margin-top: 12rpx;
+  font-size: 30rpx;
+  color: var(--text-dim);
+  letter-spacing: 2rpx;
+}
+
+.tips {
+  background: var(--panel);
+  border: 1rpx solid var(--stroke);
+  border-radius: 24rpx;
+  padding: 32rpx;
+  margin-bottom: 48rpx;
+}
+.tips-title {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: var(--text-dim);
+  letter-spacing: 4rpx;
+  margin-bottom: 20rpx;
+}
+.tip {
+  display: flex;
+  align-items: baseline;
+  font-size: 28rpx;
+  line-height: 1.7;
+  color: var(--text);
+}
+.tip-n {
+  flex: 0 0 auto;
+  width: 36rpx;
+  height: 36rpx;
+  line-height: 36rpx;
+  text-align: center;
+  border-radius: 50%;
+  background: rgba(255, 138, 60, 0.18);
+  color: var(--accent);
+  font-size: 22rpx;
+  font-weight: 700;
+  margin-right: 16rpx;
+}
+
+.start { width: 100%; }
+
+.history { margin-top: 56rpx; }
+.hist-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 8rpx;
+  border-bottom: 1rpx solid var(--stroke);
+  font-size: 28rpx;
+}
+.hist-emoji { margin-right: 16rpx; }
+.hist-main { flex: 1; }
+.hist-sub { color: var(--text-dim); font-size: 24rpx; }
