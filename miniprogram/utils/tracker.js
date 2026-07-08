@@ -95,6 +95,7 @@ class BallTracker {
     this.prev = g;
 
     const blobs = findBlobs(mask, pw, ph, 14);
+    this.lastBlobs = blobs; // 调试用: 本帧候选运动块
     if (this.state === 'tracking') this._step(blobs, t);
     else this._scan(blobs, t);
     return this._out();
